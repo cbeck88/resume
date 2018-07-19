@@ -1,0 +1,163 @@
+%______________________________________________________________________________________________________________________
+% @brief    LaTeX2e Resume for Kamil K Wojcicki
+\documentclass[margin,line]{resume}
+
+
+%______________________________________________________________________________________________________________________
+\begin{document}
+\name{\Large Chris Beck}
+\begin{resume}
+
+    %__________________________________________________________________________________________________________________
+    % Contact Information
+    \section{\mysidestyle Contact\\Information}
+
+    Theory Group                            \hfill office: +1 (609) 258 1641          \vspace{0mm}\\\vspace{0mm}%
+    Computer Science Department                          \hfill mobile: +1 (203) 984 8289          \vspace{0mm}\\\vspace{0mm}%
+    Princeton University, Princeton, New Jersey, USA      \hfill e-mail: cbeck@princeton.edu  \vspace{0mm}\\\vspace{-4.5mm}%
+
+
+    %__________________________________________________________________________________________________________________
+    % Research Interests
+    \section{\mysidestyle Research\\Interests}
+
+    Computational Complexity, Algorithms, Combinatorics \\ 
+
+
+    %__________________________________________________________________________________________________________________
+    % Education
+    \section{\mysidestyle Education}
+
+    \textbf{Princeton University}, Princeton, New Jersey, USA \vspace{2mm}\\\vspace{1mm}%
+    \textsl{Doctor of Philosophy: Computer Science} \hfill \textbf{ Sept 2009 -- present}\vspace{-3mm}\\\vspace{-1mm}%
+    \begin{list2}
+        \item Expected graduation date: May 2014
+        \item Advisors:  Professor Sanjeev Arora and Professor Russell Impagliazzo
+    \end{list2}\vspace{-1.5mm}
+%    \textsl{BInfTech, BEng (Hons)} \hfill \textbf{February 2000 -- April 2005}\vspace{-3mm}\\\vspace{-1mm}%
+
+    \textbf{California Institute of Technology}, Pasadena, California, USA \vspace{2mm}\\\vspace{1mm}%
+    \textsl{Bachelors of Science: Mathematics} \hfill \textbf{ Sept 2005 -- June 2009}\\
+    \textsl{Bachelors of Science: Computer Science} \hfill \textbf{ Sept 2005 -- June 2009}\vspace{-3mm}\\\vspace{-1mm}
+    \begin{list2}
+	\item GPA: 3.7/4.0
+    \end{list2}
+
+    %__________________________________________________________________________________________________________________
+    % Publications
+    \section{\mysidestyle Selected Publications}
+
+    P. Beame, C. Beck, R. Impagliazzo. Time-Space Tradeoffs in Resolution: Superpolynomial Lower Bounds for Superlinear Space. \textsl{Proceedings of the 44th Annual ACM Symposium on Theory of Computation} (STOC 2012), to appear. Technical Report TR 11-149, Electronic Colloquium on Computational Complexity, 2011.
+
+\vspace{-2mm}
+    C. Beck, R. Impagliazzo, S. Lovett. Large Deviation Bounds for Decision Trees and Sampling Lower Bounds for AC0-circuits. Submitted to FOCS 2012. Technical Report TR 12-042, Electronic Colloquium on Computational Complexity, 2012.
+
+\vspace{-2mm}
+    C. Beck, J. Nordstr{\"o}m, B. Tang. Some Tradeoffs in Polynomial Calculus. 
+    Submitted to FOCS 2012. Preprint available upon request.
+
+    \section{\mysidestyle Invited Talks}
+
+    \textsl{Time-Space Tradeoffs in Resolution: Superpolynomial Lower Bounds for Superlinear Space.}
+    \begin{list2}
+	\item John Templeton Foundation Workshop: ``Limits of Theorem Proving''. Rome, Sept 2012.
+	\item {\bf University of Toronto} Theory Group Seminar. May 2012.
+	\item {\bf KTH Royal Institute of Technology} Theory Group Seminar. January 2012.
+	\item {\bf Institute for Advanced Study} Computer Science Discrete Math Seminar. December 2011.
+	\item {\bf University of Chicago} Theory Group Seminar. November 2011.
+	\item BIRS Workshop: ``Proof Complexity''. Banff, October 2011.
+    \end{list2}
+
+    %__________________________________________________________________________________________________________________
+    % Honours and Awards
+    \section{\mysidestyle Honors and\\Awards} 
+
+    The G. Wallace Ruckert '30 Fellowship, 2009 						    \vspace{1mm}\\%
+    NSF GRFP Honorable Mention, 2009								    \vspace{1mm}\\%
+    SURF Fellow, 2006 and 2008									    \vspace{1mm}\\%
+    Junior Engineering and Technical Society (JETS) Team National Champions, 2005		    \vspace{1mm}\\%
+    Mathematics Department Award for Excellent in Mathematics and Computer Science, 2004 and 2005\vspace{1mm}\\%
+    US Physics Olympiad Semifinalist, 2004							    \vspace{1mm}\\%
+    Bausch \& Lomb Award for Outstanding Achievement in Science, 2004				    \vspace{1mm}\\%
+    USA Mathematical Talent Search Silver Medalist, 2003 and 2004                                   \vspace{1mm}\\%
+    National Merit Semifinalist, 2005								    \vspace{1mm}\\%
+    Math Counts National Finalist Rank 81st, 2002						    \vspace{1mm}\\%
+%    Trinity College Award for Scholarship, Dedication, and Service to School, 2005		    \vspace{1mm}\\%
+
+
+    %__________________________________________________________________________________________________________________
+    % Professional Experience
+    \section{\mysidestyle Professional\\Experience}
+
+    \textbf{Princeton University}, Princeton, New Jersey, USA \vspace{2mm}\\\vspace{1mm}%
+%    \textsl{Research Assistant} \hfill \textbf{June 2011 -- Sept 2011}\\
+%    Investigated time space tradeoffs for proof systems and other models, concluding our work on [BBI'12]. Made a conjecture implying the main result of [BIL'12] which we later proved.
+    \textsl{Teaching Assistant} \hfill \textbf{Sept 2011 -- May 2012}\\
+    Teaching assistant for undergraduate courses in theory of computation, computational geometry.
+%    \textsl{Research Assistant} \hfill \textbf{June 2010 -- Sept 2010}\\
+%    Investigated the classical complexity of several group-theoretic problems conjectured to have quantum speedups.
+%    In an unpublished manuscript, gave evidence that this is unlikely to be the case.
+
+    \textbf{California Institute of Technology}, Pasadena, California, USA \vspace{2mm}\\\vspace{1mm}%
+    \textsl{Teaching Assistant} \hfill \textbf{Mar 2009 -- June 2009}\\
+    Teaching assistant for undergraduate course in approximation algorithms.
+
+    \textsl{SURF Research Fellow} \hfill \textbf{June 2008 -- September 2008}\\
+    Investigated Polynomial Calculus proofs of Graph Nonisomorphism, and related issues in algebraic graph theory.
+    Mentored by Professor Richard Wilson.
+
+    \textsl{SURF Research Fellow} \hfill \textbf{June 2006 -- September 2006}\\
+    Investigated a conjecture concerning the $\Sigma^P_2$ hardness of the Graph Ramsey Numbering problem.
+    Mentored by Professor Christopher Umans.
+
+    \textbf{Fairfield University}, Fairfield, Connecticut, USA \vspace{2mm}\\\vspace{1mm}%
+    \textsl{Research Assistant} \hfill \textbf{June 2004 -- August 2006} \\
+    Assisted Professor Adam King in developing data analysis and cleanup tools in Matlab for psychophysical data. The data was obtained in part by a laser which would continuously measure the position of mice within a tunnel, with the goal of understanding the nature of errors made by mice trying to remember distances. This is relevant to modelling animal memory and such data has been used to rule out certain models of memory formation in animals. 
+
+    %__________________________________________________________________________________________________________________
+    % Computer Skills
+    \section{\mysidestyle Programming} 
+
+    C, C++, Java, Matlab, Mathematica, GAP, Unix shell scripting, Latex, Lisp, Haskell.
+
+
+
+    %__________________________________________________________________________________________________________________
+    % Referees
+%    \section{\mysidestyle Referees} 
+%    {\sl Available on request.}
+
+
+
+%______________________________________________________________________________________________________________________
+\section{\mysidestyle References} 
+\emph{Contact information available upon request.}
+
+\begin{tabular}{@{}p{6cm}p{6cm}}
+\textbf{Professor Sanjeev Arora}        &  \textbf{Professor Russell Impagliazzo}   \\
+Professor of Computer Science           &  Professor of Computer Science            \\
+Princeton University                    &  University of California, San Diego      \\
+Princeton, New Jersey, USA              &  San Diego, California, USA               \\
+%phone: \textsl{available on request}    &  phone: \textsl{available on request}     \\
+%e-mail: \textsl{available on request}   &  e-mail: \textsl{available on request}    \\
+\end{tabular}
+
+\begin{tabular}{@{}p{6cm}p{6cm}}
+\textbf{Professor Jakob Nordstr{\"o}m}    &  \textbf{Professor Paul Beame}        \\
+Asst. Professor of Computer Science   &  Professor of Computer Science                 \\
+KTH Royal Institue of Technology          &  University of Washington       \\
+Stockholm, Sweden                         &  Seattle, Washington, USA                \\
+%phone: \textsl{available on request}    &  phone: \textsl{available on request}     \\
+%e-mail: \textsl{available on request}   &  e-mail: \textsl{available on request}    \\
+\end{tabular}
+
+
+
+%______________________________________________________________________________________________________________________
+\end{resume}
+\end{document}
+
+
+%______________________________________________________________________________________________________________________
+% EOF
+
