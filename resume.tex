@@ -32,7 +32,7 @@
     \textsl{Doctor of Philosophy: Computer Science} \hfill \textbf{ 2009 -- 2014 }\vspace{-3mm}\\\vspace{-1mm}%
     \begin{list2}
         \item Advisors:  Professor Sanjeev Arora and Professor Russell Impagliazzo
-        \item GPA: 3.940/4.0
+        \item GPA: 3.94/4.0
     \end{list2}\vspace{-1.5mm}
 %    \textsl{BInfTech, BEng (Hons)} \hfill \textbf{February 2000 -- April 2005}\vspace{-3mm}\\\vspace{-1mm}%
 
@@ -78,6 +78,13 @@
     % Professional Experience
     \section{\mysidestyle Professional\\Experience}
 
+    \textbf{Tesla Inc.}, Palo Alto, California, USA \vspace{2mm}\\\vspace{1mm}%
+    \textsl{Senior Software Developer} \hfill \textbf{Oct 2017 -- Present}\\
+    Autopilot Software Infrastructure. Interprocess communication frameworks for tasks with real-time safety constraints.
+    Modern C++ utility libraries and data structures. Rewrote large parts of logging and telemetry infrastructure to
+    minimize overhead in real-time tasks. I also contribute to our coding guidelines. I am interested in
+    leveraging modern C++ for safety without losing portability, efficiency.
+
     \textbf{Institute for Advanced Study}, Princeton, New Jersey, USA \vspace{2mm}\\\vspace{1mm}%
     \textsl{Postdoctoral Scholar} \hfill \textbf{Sept 2014 -- August 2016}\\
     Research in computational complexity theory, especially time space tradeoffs and pseudorandomness.
@@ -91,44 +98,46 @@
 %    Investigated the classical complexity of several group-theoretic problems conjectured to have quantum speedups.
 %    In an unpublished manuscript, gave evidence that this is unlikely to be the case.
 
+\newpage
+
     \textbf{California Institute of Technology}, Pasadena, California, USA \vspace{2mm}\\\vspace{1mm}%
     \textsl{Teaching Assistant} \hfill \textbf{Mar 2009 -- June 2009}\\
     Teaching assistant for undergraduate course in approximation algorithms.
 
 %\newpage
 
-    \textsl{SURF Research Fellow} \hfill \textbf{June 2008 -- September 2008}\\
-    Investigated Polynomial Calculus proofs of Graph Nonisomorphism, and related issues in algebraic graph theory.
-    Mentored by Professor Richard Wilson.
+    %\textsl{SURF Research Fellow} \hfill \textbf{June 2008 -- September 2008}\\
+    %Investigated Polynomial Calculus proofs of Graph Nonisomorphism, and related issues in algebraic graph theory.
+    %Mentored by Professor Richard Wilson.
        
 
-\newpage
+%\newpage
 
     %__________________________________________________________________________________________________________________
     % Computer Skills
     \section{\mysidestyle Programming} 
 
-    C, C++, Python, Lua, Matlab, Bash scripting, Git
+    C++, Python, Lua, Matlab, Bash scripting, Git
 
     \section{\mysidestyle Open Source\\Contributions}
 
     \textbf{visit\_struct} (Lead developer) \hfill https://github.com/cbeck88/visit\_struct \\
     A tiny library that provides for struct-field reflection in C++11. It is portable to many versions of gcc, clang, and msvc,
-    and I'm told in github issue comments that it has been used in production.
+    and many github users tell me they have used it in production. As of 2018 it is used in Tesla autopilot code for certain code-gen tasks.
 
     \textbf{strict\_variant} (Lead developer) \hfill https://github.com/cbeck88/strict\_variant \\
-    A simple and efficient type-safe union for C++11.
+    A simple and efficient type-safe union for C++11, which is embedded / real-time friendly, meaning it is very easy
+    to use it in a way that avoids C++ exceptions and dynamic allocations. As of 2018 it is used in Tesla autopilot code.
 
     \textbf{spirit\_po} (Lead developer) \hfill https://github.com/cbeck88/spirit\_po \\
-    A library that parses the gettext po format, and reproduces parts of the interface of libintl.
-    It can be used in C++ projects that use the GNU gettext system for internationalization and localization of software.
-    spirit\_po is written using the boost::spirit high-level parser framework, it is in total about 900 lines of code.
-    spirit\_po has been used for about a year by the Battle for Wesnoth project.
+    A library that parses the gettext po format, and can replace the use of GNU libintl in projects that use the GNU
+    gettext system for internationalization of software.
+    spirit\_po is written using the boost::spirit parser framework, it is in total about 900 lines of code.
+    It has been used in the Battle for Wesnoth project for several years now.
 
     \textbf{CEGUI} \hfill https://cegui.org.uk  \\
     CEGUI is a GUI framework written in C++ and distributed under a permissive license. It is highly performant,
-    flexible, and configurable, with minimal dependencies. The project is at least ten years old and has been used 
-    in hundreds of projects, including AAA game titles like Torchlight. \\
+    flexible, and configurable, with minimal dependencies, and has been used in a lot of projects. \\
     % \begin{itemize}
     % \item
     \textsl{Porting to WebGL} \hfill https://github.com/cbeck88/cegui-emscripten \\
@@ -147,16 +156,16 @@
     I made patches to this project in the years 2014-2015, and I have commit access to it. \\
     % \begin{itemize}
     %\item
-    \textsl{WML API Unit tests} \\ I created a unit testing framework for the WML API. WML is a data language that is used
-    to make wesnoth scenarios. Previously there were no automated tests of this API. I created a framework for unattended
-    test scenarios, and a framework to run them as part of continuous integration. The intial tests I created have been
-    extended by many developers and the framework is still used today.
-    These tests also permitted aggressive refactoring of the project which resulted
-    in about 10,000 lines of code being removed. \\
+    %\textsl{WML API Unit tests} \\ I created a unit testing framework for the WML API. WML is a data language that is used
+    %to make wesnoth scenarios. Previously there were no automated tests of this API. I created a framework for unattended
+    %test scenarios, and a framework to run them as part of continuous integration. The intial tests I created have been
+    %extended by many developers and the framework is still used today.
+    %These tests also permitted aggressive refactoring of the project which resulted
+    %in about 10,000 lines of code being removed. \\
     % \item
     \textsl{xBRZ scaling engine} \\ Wesnoth graphics are based on software rendered sprites, drawn in a pixel art style. In several patches,
     I fixed some bugs in scaling algorithms that had been used, and merged a new patch which allowed the use of a modern scaling algorithm
-    called xBRZ. xBRZ attempts to scale pixel art in a way that preserves edges and angles. \\
+    called xBRZ. xBRZ attempts to scale pixel art in a way that preserves features and details. \\
     % \end{itemize}
 
 
