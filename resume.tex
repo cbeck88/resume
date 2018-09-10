@@ -30,39 +30,11 @@
 
     \textbf{Princeton University}, Princeton, New Jersey, USA \vspace{2mm}\\\vspace{1mm}%
     \textsl{Doctor of Philosophy: Computer Science} \hfill \textbf{ 2009 -- 2014 }\vspace{-3mm}\\\vspace{-1mm}%
-    \begin{list2}
-        \item Advisors:  Professor Sanjeev Arora and Professor Russell Impagliazzo
-        \item GPA: 3.94/4.0
-    \end{list2}\vspace{-1.5mm}
 %    \textsl{BInfTech, BEng (Hons)} \hfill \textbf{February 2000 -- April 2005}\vspace{-3mm}\\\vspace{-1mm}%
 
     \textbf{California Institute of Technology}, Pasadena, California, USA \vspace{2mm}\\\vspace{1mm}%
     \textsl{Bachelors of Science with Honor: Mathematics} \hfill \textbf{ 2005 -- 2009}\\
     \textsl{Bachelors of Science with Honor: Computer Science} \hfill \textbf{ 2005 -- 2009}\vspace{-3mm}\\%\vspace{-1mm}
-    \begin{list2}
-	\item GPA: 3.7/4.0
-    \end{list2}
-
-    \textbf{Selected course titles:} Algorithms and Data structures, Information security, Machine Learning \\
-    Algebra, Geometry, Topology, Analysis, Probability, Combinatorics, Algebraic Geometry \\
-
-    %__________________________________________________________________________________________________________________
-    % Publications
-    \section{\mysidestyle Selected Publications}
-
-    P. Beame, C. Beck, R. Impagliazzo. Time-Space Tradeoffs in Resolution: Superpolynomial Lower Bounds for Superlinear Space. \textsl{Proceedings of the 44th Annual ACM Symposium on Theory of Computing } (STOC 2012). {\bf Also in special issue of SIAM Journal on Computing 2016 45:4, 1612-1645 .}
-
-\vspace{-2mm}
-    C. Beck, R. Impagliazzo, S. Lovett. Large Deviation Bounds for Decision Trees and Sampling Lower Bounds for AC0-circuits. \textsl{Proceedings of the 53rd Annual IEEE Symposium on Foundations of Computer Science} (FOCS 2012). 
-
-\vspace{-2mm}
-    C. Beck, J. Nordstr{\"o}m, B. Tang. Some Tradeoffs in Polynomial Calculus. 
-    \textsl{Proceedings of the 45th Annual ACM Symposium on Theory of Computing } (STOC 2013).
-    
-
-\vspace{-2mm}
-    C. Beck, R. Impagliazzo. Strong ETH Holds for Regular Resolution.
-    \textsl{Proceedings of the 45th Annual ACM Symposium on Theory of Computing } (STOC 2013).
 
     %__________________________________________________________________________________________________________________
     % Honours and Awards
@@ -72,7 +44,6 @@
     {\bf Simons Award for Graduate Students in Theoretical Computer Science}, 2012-2014		    \vspace{1mm}\\
     NSF GRFP Honorable Mention, 2009								    \vspace{1mm}\\%
     The G. Wallace Ruckert '30 Fellowship, 2009 						    \vspace{1mm}\\%
-    SURF Fellow, 2006 and 2008									    \vspace{1mm}\\%
     
     %__________________________________________________________________________________________________________________
     % Professional Experience
@@ -80,29 +51,69 @@
 
     \textbf{Tesla Inc.}, Palo Alto, California, USA \vspace{2mm}\\\vspace{1mm}%
     \textsl{Senior Software Developer} \hfill \textbf{Oct 2017 -- Present}\\
-    Autopilot Software Infrastructure. Interprocess communication frameworks for tasks with real-time safety constraints.
-    Modern C++ utility libraries and data structures. Rewrote large parts of logging and telemetry infrastructure to
-    minimize overhead in real-time tasks. I also contribute to our coding guidelines. I am interested in
-    leveraging modern C++ for safety without losing portability, efficiency.
+    Autopilot Software Infrastructure.
+    
+    I write C++ code that runs in the car and is used by critical software components like
+    Vision, Camera, Can-bus, to communicate. Many such components are organized
+    in the car computer as independent linux processes, using Posix Shared memory.
+    My projects and responsbilities have included:
+    
+    \textsl{Implementing a series of high performance ringbuffers}
 
-    \textbf{Institute for Advanced Study}, Princeton, New Jersey, USA \vspace{2mm}\\\vspace{1mm}%
-    \textsl{Postdoctoral Scholar} \hfill \textbf{Sept 2014 -- August 2016}\\
-    Research in computational complexity theory, especially time space tradeoffs and pseudorandomness.
+    \begin{list2}
+    \item{Fixed size, multiple consumer, single producer, lock-free, and with wait-free guarantee for readers}
+    \item{Fixed size, multiple producer, single consumer, lock-free, and with wait-free guarantee for reader}
+    \item{Variable length single producer, single consumer ringbuffer with wait-free guarantee for all}
+    \end{list2}
+    
+    Each of these ring buffer styles is used at different junctures in the autopilot stack. For example (1) to broad cast values read
+    from a sensor to multiple parties who can read the most recent value as well as historical values in parallel,
+    (2) To log timestamps associated to access events of shared memory variables (3) To hold text logs, http transactions, compressed
+    binary data.
+    
+    \textsl{Implementing a new interface and back end for text logging in autopilot}
+    
+    I was assigned to replace our legacy text logging infrastructure based on the google ``glog'' library and
+    to make a new real-time-friendly text logging implementation per our coding guidelines.
+    It was found that this meant requiring replacing the entire glog interface as well as the implementation.
+    
+    I implemented a drop-in replacement for the legacy interface, using modern techniques to make it as efficient as possible.
 
-    \textbf{Princeton University}, Princeton, New Jersey, USA \vspace{2mm}\\\vspace{1mm}%
+    \textsl{Implementing efficient and generic data compression and recovery routines for real-time data values exchanged by autopilot components}
+
+    Shared memory is used to exchange data structures ranging from a few bytes to a few megabytes. To log such data, we wanted to be able
+    to generically delta-compress the changes. Historically, these data were streamed to zlib (the standard C library for lz4 compression),
+    in the critical path of real-time tasks, and then handed off to a background thread to write to a pipe. We replaced all of this with variable-length shared memory ringbuffers, and implemented an efficient delta compresion
+    strategy based on scanning in one pass over the old value and the new value to compute a useful diff. Our implementation made use of compiler instrincs
+    to ensure that the compiler was able to use SSE instructions. Much care was taken to ensure that we do this wihtout
+    breaking the strict aliasing rule.
+
+\newpage
+    
+    \textsl{Implementing modern C++ utility libraries}
+    
+    Because many autopilot tasks have real-time critical safety requirements, many language features like exceptions
+    and dynamic memory cannot be used at all while the car is moving.
+    implementations of things like ``std::variant'', ``std::function'', ``std::ostream'' that provide equivalent functionality while being usable in a real-time context.
+
+    \textsl{Contributions to our coding guidelines}
+
+	I contribute regularly to our coding guidelines in regards to safe and modern C++.
+
+    \textsl{Deploying ccache to speed up the autopilot build}
+    
+    In my first week at autopilot, I realized that we were not using ccache to accelerate incremental builds, and I believed
+    that it was probably a good idea to do so. At time of initial deployment, ccache accelerated the build by a factor of more than 5 (1 hour $\rightarrow \approx$ 10 min).
+    Nowadays after other improvements to the build, ccache still provides about a 2x improvement.
+
+%    \textbf{Princeton University}, Princeton, New Jersey, USA \vspace{2mm}\\\vspace{1mm}%
 %    \textsl{Research Assistant} \hfill \textbf{June 2011 -- Sept 2011}\\
 %    Investigated time space tradeoffs for proof systems and other models, concluding our work on [BBI'12]. Made a conjecture implying the main result of [BIL'12] which we later proved.
-    \textsl{Teaching Assistant} \hfill \textbf{Sept 2011 -- May 2012}\\
-    Teaching assistant for undergraduate courses in theory of computation, computational geometry.
+%    \textsl{Teaching Assistant} \hfill \textbf{Sept 2011 -- May 2012}\\
+%    Teaching assistant for undergraduate courses in theory of computation, computational geometry.
 %    \textsl{Research Assistant} \hfill \textbf{June 2010 -- Sept 2010}\\
 %    Investigated the classical complexity of several group-theoretic problems conjectured to have quantum speedups.
 %    In an unpublished manuscript, gave evidence that this is unlikely to be the case.
-
-\newpage
-
-    \textbf{California Institute of Technology}, Pasadena, California, USA \vspace{2mm}\\\vspace{1mm}%
-    \textsl{Teaching Assistant} \hfill \textbf{Mar 2009 -- June 2009}\\
-    Teaching assistant for undergraduate course in approximation algorithms.
 
 %\newpage
 
@@ -115,9 +126,9 @@
 
     %__________________________________________________________________________________________________________________
     % Computer Skills
-    \section{\mysidestyle Programming} 
+    \section{\mysidestyle Programming Skills} 
 
-    C++, Python, Lua, Matlab, Bash scripting, Git
+    C++, Python, Lua, Matlab, Bash scripting, Git. Currently learning Rust.
 
     \section{\mysidestyle Open Source\\Contributions}
 
@@ -135,57 +146,30 @@
     spirit\_po is written using the boost::spirit parser framework, it is in total about 900 lines of code.
     It has been used in the Battle for Wesnoth project for several years now.
 
-    \textbf{CEGUI} \hfill https://cegui.org.uk  \\
-    CEGUI is a GUI framework written in C++ and distributed under a permissive license. It is highly performant,
-    flexible, and configurable, with minimal dependencies, and has been used in a lot of projects. \\
-    % \begin{itemize}
-    % \item
-    \textsl{Porting to WebGL} \hfill https://github.com/cbeck88/cegui-emscripten \\
-    I ported the CEGUI samples framework to javascript using the emscripten cross compiler.
-    This means the user can view the samples in their webbrowser, rendered using WebGL. This uncovered some
-    bugs in the CEGUI OpenGL renderer, and I submitted a patch upstream to fix these problems. \\
-    % \item
-    % \textsl{Menubar behavior} CEGUI contains built-in functionality for menus, menubars, context menus and other staples
-    % of UI. However, they had the problem that sometimes they would go off the screen unnecessarily and the user wouldn't
-    % be able to see them or use them. Modern users expect that menus will intelligently position themselves to avoid being
-    % clipped. I submitted a patch so that CEGUI would do this also, and negotiated it's merger into the default branch. \\
-    % \end{itemize}
+    %__________________________________________________________________________________________________________________
+    % Publications
 
-    \textbf{wesnoth} \hfill https://github.com/wesnoth/wesnoth \\
-    The Battle for Wesnoth is a turn-based strategy game developed as a community project since about 2004.
-    I made patches to this project in the years 2014-2015, and I have commit access to it. \\
-    % \begin{itemize}
-    %\item
-    %\textsl{WML API Unit tests} \\ I created a unit testing framework for the WML API. WML is a data language that is used
-    %to make wesnoth scenarios. Previously there were no automated tests of this API. I created a framework for unattended
-    %test scenarios, and a framework to run them as part of continuous integration. The intial tests I created have been
-    %extended by many developers and the framework is still used today.
-    %These tests also permitted aggressive refactoring of the project which resulted
-    %in about 10,000 lines of code being removed. \\
-    % \item
-    \textsl{xBRZ scaling engine} \\ Wesnoth graphics are based on software rendered sprites, drawn in a pixel art style. In several patches,
-    I fixed some bugs in scaling algorithms that had been used, and merged a new patch which allowed the use of a modern scaling algorithm
-    called xBRZ. xBRZ attempts to scale pixel art in a way that preserves features and details. \\
-    % \end{itemize}
+\section{\mysidestyle Academic Career}
 
+    \textbf{Institute for Advanced Study}, Princeton, New Jersey, USA \vspace{2mm}\\\vspace{1mm}%
+    \textsl{Postdoctoral Scholar} \hfill \textbf{Sept 2014 -- August 2016}\\
+    Research in computational complexity theory, especially time space tradeoffs and pseudorandomness.
 
-    \section{\mysidestyle Invited Talks}
+    \section{\mysidestyle Selected Publications}
 
-    \begin{list2}
-	\item {\bf John Templeton Foundation Workshop}: ``Limits of Theorem Proving''. Rome, Sept 2012.
-	\item {\bf China Theory Week} Aarhus, August 2012.
-	\item {\bf Symposium on Theory of Computing} New York City, May 2012.
-	\item {\bf University of Toronto} Theory Group Seminar. May 2012.
-	\item {\bf KTH Royal Institute of Technology} Theory Group Seminar. January 2012.
-	\item {\bf Institute for Advanced Study} Computer Science Discrete Math Seminar. December 2011.
-	\item {\bf University of Chicago} Theory Group Seminar. November 2011.
-	\item {\bf BIRS Workshop}: ``Proof Complexity''. Banff, October 2011.
-	\item {\bf University of Chicago} Theory Group Seminar. December 2012.
-	\item {\bf Symposium on Foundations of Computer Science} New Brunswick, September 2012.
-	\item {\bf Symposium on Theory of Computing} Palo Alto, May 2013.
-	\item {\bf University of California, San Diego} Theory Group Seminar, August 2013.
-    \item {\bf Insitute for Advanced Study} Computer Science Discrete Math Seminar. March 2015.
-    \end{list2}
+    P. Beame, C. Beck, R. Impagliazzo. Time-Space Tradeoffs in Resolution: Superpolynomial Lower Bounds for Superlinear Space. \textsl{Proceedings of the 44th Annual ACM Symposium on Theory of Computing } (STOC 2012). {\bf Also in special issue of SIAM Journal on Computing 2016 45:4, 1612-1645 .}
+
+\vspace{-2mm}
+    C. Beck, R. Impagliazzo, S. Lovett. Large Deviation Bounds for Decision Trees and Sampling Lower Bounds for AC0-circuits. \textsl{Proceedings of the 53rd Annual IEEE Symposium on Foundations of Computer Science} (FOCS 2012). 
+
+\vspace{-2mm}
+    C. Beck, J. Nordstr{\"o}m, B. Tang. Some Tradeoffs in Polynomial Calculus. 
+    \textsl{Proceedings of the 45th Annual ACM Symposium on Theory of Computing } (STOC 2013).
+    
+
+\vspace{-2mm}
+    C. Beck, R. Impagliazzo. Strong ETH Holds for Regular Resolution.
+    \textsl{Proceedings of the 45th Annual ACM Symposium on Theory of Computing } (STOC 2013).
 
 
     %__________________________________________________________________________________________________________________
