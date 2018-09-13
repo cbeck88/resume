@@ -57,54 +57,58 @@
     Vision, Camera, Can-bus, to communicate. Many such components are organized
     in the car computer as independent linux processes, using Posix Shared memory.
     My projects and responsbilities have included:
-    
-    \textsl{Implementing a series of high performance ringbuffers}
 
+    \textsl{Implementing a series of high performance lock-free shared memory ringbuffers}
     \begin{list2}
-    \item{Fixed size, multiple consumer, single producer, lock-free, and with wait-free guarantee for readers}
-    \item{Fixed size, multiple producer, single consumer, lock-free, and with wait-free guarantee for reader}
-    \item{Variable length single producer, single consumer ringbuffer with wait-free guarantee for all}
+    \item{Several implementations were given to support tradeoffs: (strong wait-free guarantee, multiple producers or consumers, fixed or variable-length payloads)}
+    \item{These have various applications in the car for sharing critical data between processes, or logging activities of processes / changing of critical data}
+    \item{Designed to be used in shared memory for interprocess communication, initialized lazily / on-demand, portable but optimized for x86 and arm architectures}
+    \item{Implemented a clean ``single-step'' deterministic test framework for fuzzing these}
     \end{list2}
-    
-    Each of these ring buffer styles is used at different junctures in the autopilot stack. For example (1) to broad cast values read
-    from a sensor to multiple parties who can read the most recent value as well as historical values in parallel,
-    (2) To log timestamps associated to access events of shared memory variables (3) To hold text logs, http transactions, compressed
-    binary data.
-    
-    \textsl{Implementing a new interface and back end for text logging in autopilot}
-    
-    I was assigned to replace our legacy text logging infrastructure based on the google ``glog'' library and
-    to make a new real-time-friendly text logging implementation per our coding guidelines.
-    It was found that this meant requiring replacing the entire glog interface as well as the implementation.
-    
-    I implemented a drop-in replacement for the legacy interface, using modern techniques to make it as efficient as possible.
+    \textsl{Implementing a new interface and back-end for glog-style text logging}
+    \begin{list2}
+    \item Google ``glog'' library was found to be making dynamic memory allocations and writing to pipes, not real-time friendly
+    according to our guidelines. I was assigned to fix this.
+    \item I replaced the entire glog interface and back-end, which writes over shared memory ring buffers in order not to block the critical
+    path in real-time tasks.
+    \item Our interface avoided several inefficiencies e.g. when several things are streamed at once into logging, we compute in advance before
+    formatting how much space is needed to log everything, then we make a checkout in ringbuffer and format there without copying.
+    \item We used expression templates rather than conventional ostream API to ensure that we can see all the arguments without copying any of them,
+    before having to handle any one of them.
+    \item This resolved frequent TOI interventions due to watchdog timeouts in developer builds
+    \end{list2}
 
-    \textsl{Implementing efficient and generic data compression and recovery routines for real-time data values exchanged by autopilot components}
-
-    Shared memory is used to exchange data structures ranging from a few bytes to a few megabytes. To log such data, we wanted to be able
-    to generically delta-compress the changes. Historically, these data were streamed to zlib (the standard C library for lz4 compression),
-    in the critical path of real-time tasks, and then handed off to a background thread to write to a pipe. We replaced all of this with variable-length shared memory ringbuffers, and implemented an efficient delta compresion
-    strategy based on scanning in one pass over the old value and the new value to compute a useful diff. Our implementation made use of compiler instrincs
-    to ensure that the compiler was able to use SSE instructions. Much care was taken to ensure that we do this wihtout
-    breaking the strict aliasing rule.
+    \textsl{Implementing modern (real-time / embedded-friendly) C++ utility libraries} \\
+    Because many autopilot tasks have real-time critical safety requirements, many language features like exceptions
+    and dynamic memory cannot be used at all while the car is moving. I implemented equivalent versions of many STL
+    classes that can be used safely in real-time tasks.
+    \begin{list2}
+    \item std::variant
+    \item std::function
+    \item std::ostream
+    \item Constexpr perfect hash maps
+    \end{list2}
 
 \newpage
+
+    \textsl{Implementing efficient and generic data compression and recovery routines for real-time data values}
+    \begin{list2}
+    \item{Shared memory is used to exchange data structures ranging from a few bytes to a few megabytes. Logging this requires compression, in the car.}
+    \item{Historically, these data were compressed using lz4
+    in the critical path of real-time tasks, and then handed off to a background thread to write to a pipe.}
+    \item{We replaced all of this with variable-length shared memory ringbuffers, and implemented an efficient delta compresion
+    strategy based on scanning in one pass over the old value and the new value to compute a useful diff.}
+    \item{Our implementation made use of compiler instrincs
+    to ensure that the compiler was able to use SSE instructions. Much care was taken to ensure that we do this wihtout
+    breaking the strict aliasing rule.}
+    \end{list2}
     
-    \textsl{Implementing modern C++ utility libraries}
-    
-    Because many autopilot tasks have real-time critical safety requirements, many language features like exceptions
-    and dynamic memory cannot be used at all while the car is moving.
-    implementations of things like ``std::variant'', ``std::function'', ``std::ostream'' that provide equivalent functionality while being usable in a real-time context.
-
-    \textsl{Contributions to our coding guidelines}
-
-	I contribute regularly to our coding guidelines in regards to safe and modern C++.
-
     \textsl{Deploying ccache to speed up the autopilot build}
-    
-    In my first week at autopilot, I realized that we were not using ccache to accelerate incremental builds, and I believed
-    that it was probably a good idea to do so. At time of initial deployment, ccache accelerated the build by a factor of more than 5 (1 hour $\rightarrow \approx$ 10 min).
-    Nowadays after other improvements to the build, ccache still provides about a 2x improvement.
+    \begin{list2}
+    \item{Noticed when I was hired that ccache was not being used}
+    \item{I deployed it and showed that it sped up incremental builds by 5x (1 hour to about 12 minutes), and demonstrated how to write a simple test validating that it is configured correctly.}
+    \item{ccache is now used in local developer builds and in the build farm for all builds}
+    \end{list2}
 
 %    \textbf{Princeton University}, Princeton, New Jersey, USA \vspace{2mm}\\\vspace{1mm}%
 %    \textsl{Research Assistant} \hfill \textbf{June 2011 -- Sept 2011}\\
