@@ -16,13 +16,21 @@
                                                           \hfill mobile: (upon request)          \vspace{0mm}\\\vspace{0mm}%
                                                           \hfill e-mail: beck.ct@gmail.com  \vspace{0mm}\\\vspace{-4.5mm}%
 
+    %__________________________________________________________________________________________________________________
+    \section{\mysidestyle Mission}
+
+    I enjoy thinking about complex problems and solving them from first principles, especially when performance and correctness are both critical.
+
+    I was trained as a Theoretical Computer Scientist, with a focus in computational complexity theory.\\
+    I now work as a research engineer and a cryptographer, with a strong background in high-performance low-level systems programming.
+    I have expert level knowledge in Private Information Retrieval and Oblivious RAM, and familiarity with a few ZK-proving systems.
+
+    I like working with smart, ambitious people who have clear goals and want to work on things that will impact the world positively.
 
     %__________________________________________________________________________________________________________________
-    Research Interests
     \section{\mysidestyle Research\\Interests}
 
-    Computational Complexity, Pseudorandomness, Cryptography, Algorithms, Combinatorics \\ 
-
+    Computational Complexity, Pseudorandomness, Cryptography, Algorithms, Combinatorics \\
 
     %__________________________________________________________________________________________________________________
     % Education
@@ -30,7 +38,6 @@
 
     \textbf{Princeton University}, Princeton, New Jersey, USA \vspace{2mm}\\\vspace{1mm}%
     \textsl{Doctor of Philosophy: Computer Science} \hfill \textbf{ 2009 -- 2014 }\vspace{-3mm}\\\vspace{-1mm}%
-%    \textsl{BInfTech, BEng (Hons)} \hfill \textbf{February 2000 -- April 2005}\vspace{-3mm}\\\vspace{-1mm}%
 
     \textbf{California Institute of Technology}, Pasadena, California, USA \vspace{2mm}\\\vspace{1mm}%
     \textsl{Bachelors of Science with Honor: Mathematics} \hfill \textbf{ 2005 -- 2009}\\
@@ -51,126 +58,74 @@
 
     \textbf{MobileCoin Inc.}, San Francisco, California, USA \vspace{2mm}\\\vspace{1mm}%
     \textsl{Research Engineer, Cryptographic Engineer} \hfill \textbf{Nov 2018 -- present}\\
-    MobileCoin core engineering, Architect of MobileCoin Fog, Fog Team Lead
+    MobileCoin Core Engineering, Architect of MobileCoin Fog, Cryptogaphy Engineering Manager
 
-    At the beginning of the startup, my responsibilities shifted often according to the needs of the project.
-    Some highlights related to launching SGX consensus network include:
+    I was the fifth engineer hired at MobileCoin. Over my time here, my responsibilities have often shifted according to the needs of the project.
+    I have often taken responsibility for mission critical tasks.
+    Some highlights, in roughly reverse chronological order, include:
 
-    \textsl{Groundwork for SGX Infrastructure}
+    \textsl{Privacy-preserving atomic swap protocol}
     \begin{list2}
-    \item{Developed replacements for rust standard library inside of SGX, including allocator and mutex}
-    \item{The standard library cannot be used in SGX because system calls to the OS undermine the security model}
-    \item{Built out a rust environment on top of which transaction logic was implemented}
-    \item{This infrastructure was ultimately shipped in production}
+    \item{MobileCoin wanted to have a privacy-preserving DEX on our chain, however, creating private smart contracts
+    is a difficult research problem and the time horizon exceeded what was relevant from a business perspective. (We tabled this discussion in Q2 2021).}
+    \item{In Q2 2022 I conceived of a new approach. I designed and implemented a privacy-preserving atomic swap protocol which works on our chain without creating
+    smart contracts. This implementation took a few weeks. This is a peer-to-peer protocol on-top of our L1 chain. It adds no appreciable delay to a normal MobileCoin transaction.}
+    \item{The initial version was specified in MCIP 31. We extended the initial design to support partial-fill trades, in MCIP 42.}
+    \item{We delivered an implementation of the nodes of this peer-to-peer network at the end of Q1 2023. (https://github.com/mobilecoinofficial/deqs)}
     \end{list2}
 
-    \textsl{Serialization infrastructure for enclaves and blockchain}
+\newpage
+
+    \textsl{MobileCoin Fog}
     \begin{list2}
-    \item{Built infrastructure and maintained patches to ensure that well-understood formats
-    with good security properties would also build in a no-standard-library configuration
-    in order to be compatible with our SGX enclaves}
-    \item{Also responsible for using this in the implementation of the MobileCoin ledger database using lmdb}
-    \item{Collaborated with many engineers in this process}
+    \item{In 2018, MobileCoin faced an existential problem around how we can integrate with Signal messenger app whilst meeting Signal's privacy requirements in a scalable way.}
+    \item{Leadership imagined that it would work like Monero -- the phones would download and view-key scan the entire blockchain. However, Moxie Marlinspike, the CEO of Signal, rejected this.}
+    \item{They then proposed pushing this work onto the server -- SGX enclaves would view-key scan on behalf of all of the users. However, this doesn't scale in an affordable way to millions of users.}
+    \item{Some engineers proposed ``sharding'' the users, to enable a trade-off between privacy and efficiency. Moxie rejected all forms of this.}
+    \item{I lead a research effort to find a way that the users can find their transactions, without revealing any information to Signal or creating massive computational work on server or client side.}
+    \item{I conducted an overview of the state of the art in Private Information Retrieval, and determined and Oblivious RAM inside of SGX enclaves may be a viable path forwards.}
+    \item{I proposed an architecture for the MobileCoin Fog service based on experimental Oblivious RAM implementations, and provided order of magnitude estimates as to the scaling needs and costs.}
+    \item{I wrote a 40 page document explaining this proposal for Signal, which they accepted.}
+    \item{I implemented a version of ECIES public key encryption based on the Ristretto group, used for sending encrypted messages to the enclave.}
+    \item{I proposed and implemented modifications to the MobileCoin public address format, transaction format and transaction builder to be compatible with this new system.}
+    \item{I proposed and implemented a ``key-exchange random number generator'' used to privately index each user's transactions in a way that only they can detect.}
+    \item{I proposed and implemented a service which loads all the transaction data into an Oblivious RAM and makes it searchable by the random values generated thusly.}
+    \item{This novel system was patented and a journal publication is forthcoming.}
+    \item{I developed this system and worked to support demos of our technology.}
+    \item{This system has been in production for 2.5 years, having launched to production supporting millions of Signal users worldwide in February 2021, without significant incident.}
     \end{list2}
 
-    \textsl{Developed a structured hashing scheme compatible with protobuf-style Schema Evolution}
+    \textsl{MobileCoin Consensus Network}
     \begin{list2}
-    \item{Blockchains require hashing structured data in a non-malleable way}
-    \item{Developed the solution in `mc-crypto-digestible` which uses rust proc macros to walk structures}
-    \item{Marshalls structures into the `merlin` API developed by dalek-cryptography team}
-    \item{The design of this hashing scheme enables us to extend our structures with optional elements, just as protobuf,
-          without changing the hashes of old objects.}
-    \item{This innovation greatly simplifies the process of adding new features to the blockchain without breaking old code,
-          and has enabled MobileCoin to role out new features faster.}
-    \item{This scheme is now used for most hashes and digital signatures in the MobileCoin software ecosystem.}
+    \item{I played a significant role in designing MobileCoin's consensus validator enclave.}
+    \item{Implementation of privacy preserving proofs of membership for transaction validation.}
+    \item{Developed low-level SGX infrastructure (allocator, mutex, etc.) which we use instead of the rust standard library, to reduce attack surface area. (The normal rust standard library cannot be used because system calls to the OS undermine the SGX security model.)}
+    \item{Developed a structured hashing scheme compatible with protobuf-style Schema Evolution. This is used for all hashing and digital signatures within MobileCoin, and for the blockchain itself.}
+    \item{Helped to improve the performance of locking schemes used in the consensus nodes.}
+    \item{In later years, wrote numerous MCIPs and designed numerous features for MobileCoin, including encrypted memos, confidential token ids, minting and burning protocols.}
     \end{list2}
-
-    Within the first year, my most important responsibility was around the integration of MobileCoin with Signal.
-    The major technical challenge here is that privacy coin technologies make it very hard to determine whether a user
-    owns a particular coin, without having their private keys. We can't make the mobile devices download and scan the entire
-    blockchain with their private keys, because it is too much bandwidth and compute for a mobile device. We also can't move
-    the private keys off of the mobile device to the cloud, because this isn't compatible wiht our threat model and
-    violates Signal's requirements. Coming up with a new technology to solve these problems was one of the most critical
-    challenges facing MobileCoin.
-
-    \textsl{Proposal to build MobileCoin Fog (2018-2019)}
-    \begin{list2}
-    \item{Researched Private Information Retrieval literature and Signal Contact Discovery}
-    \item{Determined that Oblivious RAM may be a viable technology when used in conjunction with SGX}
-    \item{Proposed a way for Fog to discover where to route transactions without revealing information outside of SGX, using public key encryption}
-    \item{Proposed a way for Fog to index the transactions using a random number generator driven by cryptographic key exchange}
-    \item{Proposed a way for Fog to have high-availability by sharing secrets across mutually attested SGX enclaves}
-    \item{Proposed a way for Fog to further support phones in conducting private balance checks with low bandwidth}
-    \item{Conducted order of magnitude estimates to predict the efficiency of the system before builing it}
-    \item{Conducted a security analysis to demonstrate that the system resists active attacks by the node operator}
-    \item{Lobbied internally within the company to establish confidence that we can deliver the system}
-    \item{Wrote a very detailed technical proposal for Moxie Marlinspike, which was accepted after negotiation}
-    \end{list2}
-
-    \textsl{Architecture and Demos of MobileCoin Fog (2019-2020)}
-    \begin{list2}
-    \item{Adopted a microservices architecture for the system}
-    \item{Developed a client for demonstration purposes that performs balance checks and sends transactions}
-    \item{Worked closely with mobile developers to implement the Fog protocol in mobile SDKs and pin down APIs}
-    \item{Collaborated to develop interactive demos for investors using the web and mobile phones}
-    \item{Implemented cryptographic libraries for public key encryption using the Ristretto elliptic curve}
-    \item{Implemented cryptographic libraries for key-exchange-seeded random number generators}
-    \item{Offered technical leadership as our engineering team moved core functionality into enclaves, and established sound enclave APIs}
-    \item{Developed a comprehensive test plan for the system}
-    \end{list2}
-
-    \textsl{Prototypes for Oblivious RAM (2020)}
-    \begin{list2}
-    \item{Developed one, and then a second prototype for Oblivious RAM in SGX based on the Path ORAM and ZeroTrace papers}
-    \item{Designed the system with several layers of interfaces, abstracting storage away from algorithm, with a view towards Circuit ORAM algorithm}
-    \item{Created a protocol for the enclave to store encrypted authenticated data using untrusted storage}
-    \item{Achieved pen-and-paper predictions for performance}
-    \item{Identified CMOV operation as a CPU bottleneck, and wrote inline assembly using AVX2 instructions to accelerate system performance by 4x}
-    \end{list2}
-
-    \textsl{Partner Support (2020-2021)}
-    \begin{list2}
-    \item{Took frequent-calls with Signal to answer questions and speak to concerns}
-    \item{Frequently made late stage changes to the design to accommodate new requirements}
-    \item{Redesigned key exchange system to simplify operations and reduce the need for interaction with mobile devices}
-    \item{Developed a novel hash table that allows an oblivious insert-or-modify operation}
-    \item{Worked without outside cryptographers to build confidence in the modified system}
-    \item{Designed and developed an extension of MobileCoin and Fog called ``Recoverable Transaction History'', primarily to meet Signal's requirements}
-    \end{list2}
-
-    \textsl{Production-Readiness of MobileCoin Fog (2021)}
-    \begin{list2}
-    \item{Moved final Oblivious RAM implementation into all SGX enclaves for stress testing before production}
-    \item{Worked with engineers and SREs to make the system ready for practical deployment scenarios}
-    \item{Delegated segments of the remaining implementation issues to other engineers effectively in order to hit deadlines}
-    \item{Finalized data model for the system's database}
-    \item{Worked with external auditors to build confidence in the security of the system}
-    \item{Worked through failover and upgrade path scenarios and helped to produce run books}
-    \item{Developed threat model documentation}
-    \end{list2}
-
-    My ongoing responsibilities include leading the Fog team, continuing to improve performance and reliability of the system,
-    and researching new initiatives for the company.
 
     \textbf{Tesla Inc.}, Palo Alto, California, USA \vspace{2mm}\\\vspace{1mm}%
-    \textsl{Senior Software Developer} \hfill \textbf{Oct 2017 -- Nov 2018}\\
+    \textsl{Senior Software Engineer} \hfill \textbf{Oct 2017 -- Nov 2018}\\
     Autopilot Software Infrastructure.
     
     I wrote C++ code that runs in the car and is used by critical software components like
     Vision, Camera, Can-bus, to communicate. Many such components are organized
-    in the car computer as independent linux processes, using Posix Shared memory.
-    My projects and responsbilities have included:
+    in the car computer as independent linux processes, using Posix shared memory.
 
-    \textsl{Implementing a series of high-performance lock-free shared memory ringbuffers}
+    \textsl{High-performance lock-free shared memory ringbuffers}
     \begin{list2}
     \item{Several implementations were given to support tradeoffs: (strong wait-free guarantee, multiple producers or consumers, fixed or variable-length payloads)}
     \item{These have various applications in the car for sharing critical data between processes, or logging activities of processes / changing of critical data}
     \item{Designed to be used in shared memory for interprocess communication, initialized lazily / on-demand, portable but optimized for x86 and arm architectures}
     \item{Implemented a clean ``single-step'' deterministic test framework for fuzzing these}
     \end{list2}
+
+\newpage
+
     \textsl{Implementing a new interface and back-end for glog-style text logging}
     \begin{list2}
-    \item Google ``glog'' library was found to be making dynamic memory allocations and writing to pipes, not real-time friendly
+    \item Google's logging library was found to be making dynamic memory allocations and writing to pipes, not real-time friendly
     according to our guidelines. I was assigned to fix this.
     \item I replaced the entire glog interface and back-end, which writes over shared memory ring buffers in order not to block the critical
     path in real-time tasks.
@@ -186,13 +141,9 @@
     and dynamic memory cannot be used at all while the car is moving. I implemented equivalent versions of many STL
     classes that can be used safely in real-time tasks.
     \begin{list2}
-    \item \textrm{std::variant}
-    \item \textrm{std::function}
-    \item \textrm{std::ostream}
+    \item \textrm{std::variant}, \textrm{std::function}, \textrm{std::ostream}
     \item Constexpr perfect hash maps
     \end{list2}
-
-\newpage
 
 %    \textsl{Implementing efficient and generic data compression and recovery routines for real-time data values}
 %    \begin{list2}
@@ -232,10 +183,10 @@
 %\newpage
 
     %__________________________________________________________________________________________________________________
-    % Computer Skills
-    \section{\mysidestyle Programming Skills} 
+    \section{\mysidestyle Programming Proficiencies} 
 
-    Rust, C++, Python, Lua, Matlab, Bash scripting
+    Languages: Rust, C++, C, Python, Bash scripting, Lua, Matlab
+    Web Technologies: HTTP, GRPC, TLS, SQL, LMDB, Posix shared memory, Intel SGX
 
     \section{\mysidestyle Open Source\\Contributions}
 
@@ -272,12 +223,10 @@
 \vspace{-2mm}
     C. Beck, J. Nordstr{\"o}m, B. Tang. Some Tradeoffs in Polynomial Calculus. 
     \textsl{Proceedings of the 45th Annual ACM Symposium on Theory of Computing } (STOC 2013).
-    
 
 \vspace{-2mm}
     C. Beck, R. Impagliazzo. Strong ETH Holds for Regular Resolution.
     \textsl{Proceedings of the 45th Annual ACM Symposium on Theory of Computing } (STOC 2013).
-
 
     %__________________________________________________________________________________________________________________
     % Referees
